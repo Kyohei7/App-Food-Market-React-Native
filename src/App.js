@@ -4,11 +4,12 @@ import {
   View,
   Text,
 } from 'react-native';
+import { SplashScreen } from './pages';
 
 const App = () => {
   return (
     <View>
-      <Text>Food Market App</Text>
+      <SplashScreen />
     </View>
   )
 }
