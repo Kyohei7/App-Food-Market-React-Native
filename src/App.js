@@ -1,16 +1,15 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
+import 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
 import { SplashScreen } from './pages';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 const App = () => {
-  return (
-    <View>
-      <SplashScreen />
-    </View>
+  return(
+      <NavigationContainer>
+        <SplashScreen />
+      </NavigationContainer>
   )
 }
 
