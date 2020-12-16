@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import 'react-native-gesture-handler';
 import { Text, View, StyleSheet } from 'react-native'
 import { Logo } from '../../assets'
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation}) => {
+
+    useEffect(() => {
+        setTimeout(() => {
+            navigation.replace('SignIn')
+        }, 3000);
+    }, [])
+
     return(
-            <View style={styles.container}>
-                <Logo />
-                <View style={{ height: 33 }} />
-                <Text style={styles.title} >FoodMarket</Text>
-            </View>             
+        <View style={styles.container}>
+            <Logo />
+            <View style={{ height: 33 }} />
+            <Text style={styles.title} >FoodMarket</Text>
+        </View>             
     )
 }
 
