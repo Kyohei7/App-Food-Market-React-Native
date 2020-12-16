@@ -22,7 +22,7 @@ const SignUp = ({navigation}) => {
                 <Gap height={24} />
                 <Button 
                     text="Continue" 
-                    onPress={() => navigation.navigate('SignUpAddress')}
+                    onPress={() => navigation.replace('SignUpAddress')}
                 />
             </View>
         </View>
