@@ -4,22 +4,24 @@ import { FoodCard, Gap, HomeProfile, HomeTabSection } from '../../components'
 
 const Home = () => {
     return (
-        <View style={styles.page} >
-            <HomeProfile />
-            <View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <View style={styles.foodCardContainer} >
-                        <Gap width={24} />
-                        <FoodCard />
-                        <FoodCard />
-                        <FoodCard />
-                    </View>
-                </ScrollView>  
+        <ScrollView>
+            <View style={styles.page} >
+                <HomeProfile />
+                <View>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <View style={styles.foodCardContainer} >
+                            <Gap width={24} />
+                            <FoodCard />
+                            <FoodCard />
+                            <FoodCard />
+                        </View>
+                    </ScrollView>  
+                </View>
+                <View style={styles.tabContainer}>
+                    <HomeTabSection />
+                </View>
             </View>
-            <View style={styles.tabContainer}>
-                <HomeTabSection />
-            </View>
-        </View>
+        </ScrollView>
     )
 }
 

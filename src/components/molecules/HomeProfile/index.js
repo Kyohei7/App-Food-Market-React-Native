@@ -6,7 +6,7 @@ const HomeProfile = () => {
     return (
             <View style={styles.profileContainer}>
                 <View>
-                    <Text style={styles.appName}>FoodMarket</Text>
+                    <Text style={styles.appName}>Mie Ayam Rindang</Text>
                     <Text style={styles.title} >Let’s get some foods</Text>
                 </View>
                     <Image source={ProfileDummy} style={styles.profile} />

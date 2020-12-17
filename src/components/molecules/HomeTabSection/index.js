@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, Image, ScrollView } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { ItemListFood } from '..';
+import { FoodDummy1 } from '../../../assets';
 
 const renderTabBar = props => (
     <TabBar
@@ -23,13 +25,27 @@ const renderTabBar = props => (
     />
   );
 
-const FirstRoute = () => (
-    <View style={{ flex: 1 }} />
-  );
+const NewTaste = () => {
+    return(
+      <View style={{ paddingTop: 8 }}>
+          <ItemListFood image={FoodDummy1} />
+          <ItemListFood image={FoodDummy1} />
+          <ItemListFood image={FoodDummy1} />
+          <ItemListFood image={FoodDummy1} />
+      </View>
+    )
+}
    
-const SecondRoute = () => (
-    <View style={{ flex: 1  }} />
-  );
+const SecondRoute = () => {
+  return(
+    <View style={{ paddingTop: 8 }}>
+          <ItemListFood image={FoodDummy1} />
+          <ItemListFood image={FoodDummy1} />
+          <ItemListFood image={FoodDummy1} />
+          <ItemListFood image={FoodDummy1} />
+      </View>
+  )
+}
    
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -43,9 +59,9 @@ const HomeTabSection = () => {
     ]);
  
     const renderScene = SceneMap({
-        1: FirstRoute,
+        1: NewTaste,
         2: SecondRoute,
-        3: FirstRoute,
+        3: NewTaste,
     });
 
     return (
@@ -61,4 +77,6 @@ const HomeTabSection = () => {
 
 export default HomeTabSection
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})
