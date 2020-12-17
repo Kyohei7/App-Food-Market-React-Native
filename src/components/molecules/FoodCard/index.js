@@ -1,17 +1,19 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Rating } from '..'
 import { FoodDummy1} from '../../../assets'
 
 const FoodCard = () => {
     return (
-        <View style={styles.container} >
-            <Image source={FoodDummy1} />
-            <View style={styles.content} >
-                <Text style={styles.text}>Mie Ayam Bakso</Text>
-                <Rating />
+        <TouchableOpacity activeOpacity={0.7}>
+            <View style={styles.container} >
+                <Image source={FoodDummy1} />
+                <View style={styles.content} >
+                    <Text style={styles.text}> Mie Ayam Bakso </Text>
+                    <Rating />
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
