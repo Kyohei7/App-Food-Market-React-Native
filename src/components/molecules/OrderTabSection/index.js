@@ -31,117 +31,92 @@ const renderTabBar = props => (
     />
   );
 
-const NewTaste = () => {
+const InProgress = () => {
   const navigation = useNavigation()
     return(
       <View style={{ paddingTop: 8, paddingHorizontal: 24 }}>
           <ItemListFood 
-            type="product"
-            name="Mie Ayam Bakso"
-            price="10.000" 
-            image={FoodDummy1} 
-            onPress={() => navigation.navigate('FoodDetail') } />
+              image={FoodDummy1}
+              name="Mie Ayam Bakso" 
+              onPress={() => navigation.navigate('FoodDetail')}
+              type="in-progress"
+              items={5}
+              price="50.000" />
           <ItemListFood 
-            type="product"
-            name="Mie Ayam Bakso"
-            price="10.000" 
-            image={FoodDummy1} 
-            onPress={() => navigation.navigate('FoodDetail') } />
+              image={FoodDummy1}
+              name="Mie Ayam Pangsit" 
+              onPress={() => navigation.navigate('FoodDetail')}
+              type="in-progress"
+              items={5}
+              price="50.000" />
           <ItemListFood 
-            type="product"
-            name="Mie Ayam Bakso"
-            price="10.000" 
-            image={FoodDummy1} 
-            onPress={() => navigation.navigate('FoodDetail') } />
+              image={FoodDummy1}
+              name="Mie Ayam Kuah" 
+              onPress={() => navigation.navigate('FoodDetail')}
+              type="in-progress"
+              items={5}
+              price="50.000" />
           <ItemListFood 
-            type="product"
-            name="Mie Ayam Bakso"
-            price="10.000" 
-            image={FoodDummy1} 
-            onPress={() => navigation.navigate('FoodDetail') } />
+              image={FoodDummy1}
+              name="Mie Ayam Yamin" 
+              onPress={() => navigation.navigate('FoodDetail')}
+              type="in-progress"
+              items={5}
+              price="50.000" />
       </View>
     )
 }
    
-const Popular = () => {
+const PastOrders = () => {
   const navigation = useNavigation()
     return(
       <View style={{ paddingTop: 8, paddingHorizontal: 24 }}>
             <ItemListFood 
-              type="product"
+              image={FoodDummy1}
               name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
+              type="past-orders"
+              date="Jun 12, 14:00"
+              status="Cancelled" 
               onPress={() => navigation.navigate('FoodDetail') } />
             <ItemListFood 
-              type="product"
+              image={FoodDummy1}
               name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
+              type="past-orders"
+              date="Jun 12, 14:00"
+              status="Cancelled" 
               onPress={() => navigation.navigate('FoodDetail') } />
             <ItemListFood 
-              type="product"
+              image={FoodDummy1}
               name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
+              type="past-orders"
+              date="Jun 12, 14:00"
+              status="Cancelled" 
               onPress={() => navigation.navigate('FoodDetail') } />
             <ItemListFood 
-              type="product"
+              image={FoodDummy1}
               name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
+              type="past-orders"
+              date="Jun 12, 14:00"
+              status="Cancelled" 
               onPress={() => navigation.navigate('FoodDetail') } />
         </View>
     )
 }
 
-const Recommended = () => {
-  const navigation = useNavigation()
-    return(
-      <View style={{ paddingTop: 8, paddingHorizontal: 24 }}>
-            <ItemListFood 
-              type="product"
-              name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
-              onPress={() => navigation.navigate('FoodDetail') } />
-            <ItemListFood 
-              type="product"
-              name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
-              onPress={() => navigation.navigate('FoodDetail') } />
-            <ItemListFood 
-              type="product"
-              name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
-              onPress={() => navigation.navigate('FoodDetail') } />
-            <ItemListFood 
-              type="product"
-              name="Mie Ayam Bakso"
-              price="10.000" 
-              image={FoodDummy1} 
-              onPress={() => navigation.navigate('FoodDetail') } />
-        </View>
-    )
-}
-   
+
 const initialLayout = { width: Dimensions.get('window').width };
 
-const HomeTabSection = () => {
+const OrderTabSection = () => {
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: '1', title: 'New Taste' },
-        { key: '2', title: 'Popular' },
-        { key: '3', title: 'Recommended' },
+        { key: '1', title: 'In Progress' },
+        { key: '2', title: 'Past Orders' },
     ]);
  
     const renderScene = SceneMap({
-        1: NewTaste,
-        2: Popular,
-        3: Recommended,
+        1: InProgress,
+        2: PastOrders,
     });
 
     return (
@@ -156,7 +131,7 @@ const HomeTabSection = () => {
     )
 }
 
-export default HomeTabSection
+export default OrderTabSection
 
 const styles = StyleSheet.create({
 
