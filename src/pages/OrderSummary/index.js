@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { FoodDummy1 } from '../../assets'
 import { Button, Header, ItemListFood, ItemValue } from '../../components' 
 
-const OrderSummary = () => {
+const OrderSummary = ({navigation}) => {
     return (
         <ScrollView>
             <Header 
@@ -18,7 +18,7 @@ const OrderSummary = () => {
                 <ItemValue label="Mie Ayam" value="IDR 300.000" />
                 <ItemValue label="Driver" value="IDR 50.000" />
                 <ItemValue label="Tax 10%" value="IDR 30.000" />
-                <ItemValue label="Total Price" value="IDR 380.000" />
+                <ItemValue label="Total Price" value="IDR 380.000" valueColor='#1ABC9C' />
             </View>
 
             <View style={styles.content}>
@@ -31,7 +31,7 @@ const OrderSummary = () => {
             </View>
 
             <View style={styles.button} >
-                <Button text="Checkout Now" />
+                <Button text="Checkout Now" onPress={() => navigation.replace('SuccessOrder')} />
             </View>
         </ScrollView>
     )
