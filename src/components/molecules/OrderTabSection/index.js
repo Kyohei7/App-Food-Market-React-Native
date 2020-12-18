@@ -77,28 +77,28 @@ const PastOrders = () => {
               type="past-orders"
               date="Jun 12, 14:00"
               status="Cancelled" 
-              onPress={() => navigation.navigate('FoodDetail') } />
+              onPress={() => navigation.navigate('OrderDetail') } />
             <ItemListFood 
               image={FoodDummy1}
               name="Mie Ayam Bakso"
               type="past-orders"
               date="Jun 12, 14:00"
               status="Cancelled" 
-              onPress={() => navigation.navigate('FoodDetail') } />
+              onPress={() => navigation.navigate('OrderDetail') } />
             <ItemListFood 
               image={FoodDummy1}
               name="Mie Ayam Bakso"
               type="past-orders"
               date="Jun 12, 14:00"
               status="Cancelled" 
-              onPress={() => navigation.navigate('FoodDetail') } />
+              onPress={() => navigation.navigate('OrderDetail') } />
             <ItemListFood 
               image={FoodDummy1}
               name="Mie Ayam Bakso"
               type="past-orders"
               date="Jun 12, 14:00"
               status="Cancelled" 
-              onPress={() => navigation.navigate('FoodDetail') } />
+              onPress={() => navigation.navigate('OrderDetail') } />
         </View>
     )
 }
