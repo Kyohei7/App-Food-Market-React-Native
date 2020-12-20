@@ -1,3 +1,4 @@
+import Axios from 'axios'
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button, Gap, Header, TextInput } from '../../components'
@@ -13,6 +14,13 @@ const SignIn = ({navigation}) => {
 
     const onSubmit = () => {
         console.log('Form : ', form)
+        Axios.post('http://10.0.2.2:8000/api/login', form)
+            .then(res => {
+                console.log('Success', res)
+            })
+            .catch(err => {
+                console.log('error', err)
+            })
     }
 
     return(
@@ -35,7 +43,7 @@ const SignIn = ({navigation}) => {
                 <Button text="Sign In" onPress={onSubmit}  />
                 <Gap height={12} />
                 <Button 
-                    text="Create New Account" 
+                    text="Create New Account"
                     color='#8D92A3' 
                     textColor='white'
                     onPress={() => navigation.navigate('SignUp')}
