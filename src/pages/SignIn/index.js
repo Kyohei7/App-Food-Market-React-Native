@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button, Gap, Header, TextInput } from '../../components'
+import { useForm } from '../../utils'
 
 
 const SignIn = ({navigation}) => {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [form, setForm] = useForm({
+        email: '',
+        password: ''
+    })
 
     const onSubmit = () => {
-        console.log('Email ', email)
-        console.log('Password ', password)
+        console.log('Form : ', form)
     }
 
     return(
@@ -20,14 +22,14 @@ const SignIn = ({navigation}) => {
                 <TextInput 
                     label="Email Address" 
                     placeholder="Type your email address"
-                    value={email}
-                    onChangeText={(value) => setEmail(value)} />
+                    value={form.email}
+                    onChangeText={(value) => setForm('email', value)} />
                 <Gap height={16} />
                 <TextInput 
                     label="Password" 
                     placeholder="Type your email password"
-                    value={password}
-                    onChangeText={(value) => setPassword(value)}
+                    value={form.password}
+                    onChangeText={(value) => setForm( 'password', value)}
                     secureTextEntry />
                 <Gap height={24} />
                 <Button text="Sign In" onPress={onSubmit}  />
