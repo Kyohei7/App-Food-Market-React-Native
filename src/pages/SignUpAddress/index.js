@@ -1,9 +1,10 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { Header, TextInput, Gap, Button, Select } from '../../components'
 import { useForm } from '../../utils'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Axios from 'axios'
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const SignUpAddress = ({navigation}) => {
 
@@ -14,15 +15,9 @@ const SignUpAddress = ({navigation}) => {
         city: 'Jakarta'
     })
 
-    const dispatch = useDispatch()
     const registerReducer = useSelector(state => state.registerReducer)
 
     const onSubmit = () => {
-        console.log('Form : ', form)
-        // dispatch({
-        //     type: 'SET_ADDRESS', 
-        //     value: form
-        // })
         const data = {
             ...form,
             ...registerReducer
@@ -30,13 +25,21 @@ const SignUpAddress = ({navigation}) => {
         console.log('Data Register : ', data )
         Axios.post('http://10.0.2.2:8000/api/register', data)
             .then(res => {
-                console.log('Data Success : ', res.data)
+                showMessage('Register Success', 'success')
                 navigation.replace('SuccessSignUp')
             })
             .catch(err => {
-                console.log('Error Register : ', err)
+                showToast(err?.response?.data?.data?.message)
             })
-        
+    }
+
+
+    const showToast = (message, type) => {
+        showMessage({
+            message,
+            type: type === 'success' ? 'success' : 'danger',
+            backgroundColor: type === 'success' ? '#1ABC9C' : '#D9435E'
+          });
     }
 
     return(
