@@ -2,14 +2,18 @@ import React from 'react'
 import {Picker} from '@react-native-picker/picker';
 import { StyleSheet, Text, View } from 'react-native';
 
-const Select = ({label}) => {
+const Select = ({label, value, onSelectChange}) => {
     return(
         <View>
             <Text style={styles.label}> {label} </Text>
             <View style={styles.input} >
-            <Picker>
-                <Picker.Item label="Jakarta" value="jakarta" />
-                <Picker.Item label="Bandung" value="bandung" />
+            <Picker
+                selectedValue={value}
+                onValueChange={(itemValue) => 
+                    onSelectChange(itemValue)
+                } >
+                <Picker.Item label="Jakarta" value="Jakarta" />
+                <Picker.Item label="Bandung" value="Bandung" />
             </Picker>
             </View>
         </View>
