@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Header, TextInput, Gap, Button, Select } from '../../components'
 import { useForm } from '../../utils'
 import { useDispatch, useSelector } from 'react-redux'
+import Axios from 'axios'
 
 const SignUpAddress = ({navigation}) => {
 
@@ -27,9 +28,16 @@ const SignUpAddress = ({navigation}) => {
             ...registerReducer
         }
         console.log('Data Register : ', data )
-        // navigation.replace('SuccessSignUp')
+        Axios.post('http://10.0.2.2:8000/api/register', data)
+            .then(res => {
+                console.log('Data Success : ', res.data)
+                navigation.replace('SuccessSignUp')
+            })
+            .catch(err => {
+                console.log('Error Register : ', err)
+            })
+        
     }
-
 
     return(
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
