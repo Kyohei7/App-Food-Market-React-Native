@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { Header, TextInput, Gap, Button, Select } from '../../components'
 import { useForm, showMessage } from '../../utils'
 import { useSelector, useDispatch } from 'react-redux'
-import Axios from 'axios'
+import { setLoading, signUpAction } from '../../redux/action'
 
 const SignUpAddress = ({navigation}) => {
 
@@ -23,41 +23,10 @@ const SignUpAddress = ({navigation}) => {
             ...form,
             ...registerReducer
         }
-        console.log('Data Register : ', data )
-        dispatch({ type: 'SET_LOADING', value: true })
-        Axios.post('http://10.0.2.2:8000/api/register', data)
-            .then(res => {
-                console.log('Data Success : ', res.data )
-                
-                if ( photoReducer.isUploadPhoto ) {
-                    const photoForUpload = new FormData()
-                    photoForUpload.append('file', photoReducer)
+        
+        dispatch(setLoading(true))
+        dispatch(signUpAction(data, photoReducer, navigation))
 
-                    Axios.post('http://10.0.2.2:8000/api/user/photo', 
-                    photoForUpload, 
-                    {
-                        headers : {
-                            'Authorization': `${res.data.data.token_type} ${res.data.data.access_token}`,
-                            'Content-Type': 'multipart/form-data',
-                        }
-                    })
-                        .then(resUpload => {
-                            console.log('Success Upload : ', resUpload)
-                        })
-                        .catch(err => {
-                            showMessage('Upload Photo Failed')
-                            console.log('Failed Upload : ', err);
-                        })    
-                    }
-                
-                dispatch({ type: 'SET_LOADING', value: false })
-                showMessage('Register Success', 'success')
-                navigation.replace('SuccessSignUp')
-            })
-            .catch(err => {
-                dispatch({ type: 'SET_LOADING', value: false })
-                showMessage(err?.response?.data?.data?.message)
-            })
     }
 
     return(
