@@ -1,10 +1,9 @@
 import React from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Header, TextInput, Gap, Button, Select } from '../../components'
-import { useForm } from '../../utils'
+import { useForm, showMessage } from '../../utils'
 import { useSelector, useDispatch } from 'react-redux'
 import Axios from 'axios'
-import { showMessage, hideMessage } from "react-native-flash-message";
 
 const SignUpAddress = ({navigation}) => {
 
@@ -17,7 +16,7 @@ const SignUpAddress = ({navigation}) => {
 
     const dispatch = useDispatch()
 
-    const registerReducer = useSelector(state => state.registerReducer)
+    const {registerReducer, photoReducer} = useSelector(state => state)
 
     const onSubmit = () => {
         const data = {
@@ -28,23 +27,37 @@ const SignUpAddress = ({navigation}) => {
         dispatch({ type: 'SET_LOADING', value: true })
         Axios.post('http://10.0.2.2:8000/api/register', data)
             .then(res => {
-                showMessage('Register Success', 'success')
+                console.log('Data Success : ', res.data )
+                
+                if ( photoReducer.isUploadPhoto ) {
+                    const photoForUpload = new FormData()
+                    photoForUpload.append('file', photoReducer)
+
+                    Axios.post('http://10.0.2.2:8000/api/user/photo', 
+                    photoForUpload, 
+                    {
+                        headers : {
+                            'Authorization': `${res.data.data.token_type} ${res.data.data.access_token}`,
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                        .then(resUpload => {
+                            console.log('Success Upload : ', resUpload)
+                        })
+                        .catch(err => {
+                            showMessage('Upload Photo Failed')
+                            console.log('Failed Upload : ', err);
+                        })    
+                    }
+                
                 dispatch({ type: 'SET_LOADING', value: false })
+                showMessage('Register Success', 'success')
                 navigation.replace('SuccessSignUp')
             })
             .catch(err => {
                 dispatch({ type: 'SET_LOADING', value: false })
-                showToast(err?.response?.data?.data?.message)
+                showMessage(err?.response?.data?.data?.message)
             })
-    }
-
-
-    const showToast = (message, type) => {
-        showMessage({
-            message,
-            type: type === 'success' ? 'success' : 'danger',
-            backgroundColor: type === 'success' ? '#1ABC9C' : '#D9435E'
-          });
     }
 
     return(

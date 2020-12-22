@@ -1,3 +1,5 @@
+import { State } from "react-native-gesture-handler"
+
 const initStateRegister = {
     name: '',
     email: '',
@@ -19,14 +21,32 @@ export const registerReducer = (state = initStateRegister, action) => {
             password_confirmation: action.value.password,
         }
     }
-    // if (action.type === 'SET_ADDRESS') {
-    //     return {
-    //         ...state, 
-    //         address: action.value.address,
-    //         city: action.value.city,
-    //         phoneNumber: action.value.phoneNumber,
-    //         houseNumber: action.value.houseNumber,
-    //     }
-    // }
+    return state
+}
+
+const initPhoto = {
+    uri: '',
+    type: '',
+    name: '',
+    isUploadPhoto: false,
+}
+
+export const photoReducer = (state = initPhoto, action) => {
+    if (action.type === 'SET_PHOTO') {
+        return {
+            ...state,
+            uri: action.value.uri,
+            type: action.value.type,
+            name: action.value.name,
+        }
+    }
+
+    if (action.type === 'SET_UPLOAD_STATUS') {
+        return {
+            ...state,
+            isUploadPhoto: action.value
+        }
+    }
+
     return state
 }
