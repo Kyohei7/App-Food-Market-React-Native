@@ -14,7 +14,9 @@ const SuccessSignUp = ({navigation}) => {
             <Text style={styles.subtitle}>some foods as a self-reward</Text>
             <Gap height={30} />
             <View style={styles.button} >
-                <Button text="Find Foods" onPress={() => navigation.navigate('MainApp')} />   
+                <Button 
+                    text="Find Foods" 
+                    onPress={() => navigation.reset({index: 0, routes: [{name: 'MainApp'}]})} />   
             </View> 
         </View>
     )
