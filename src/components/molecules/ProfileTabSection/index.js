@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Dimensions, Image, ScrollView, TouchableOpacity
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ItemListMenu } from '..';
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const renderTabBar = props => (
     <TabBar
@@ -32,12 +33,20 @@ const renderTabBar = props => (
 
 const Account = () => {
   const navigation = useNavigation()
+
+  const signOut = () => {
+    AsyncStorage.multiRemove(['userProfile', 'token']).then(() => {
+      navigation.reset({index: 0, routes: [{name: 'SignIn'}]})
+    }) 
+  }
+
     return(
       <View style={{ paddingTop: 8, paddingHorizontal: 24 }} >
           <ItemListMenu label="Edit Profile" />
           <ItemListMenu label="Home Address" />
           <ItemListMenu label="Security" />
           <ItemListMenu label="Payments" />
+          <ItemListMenu label="Sign Out" onPress={signOut} />
       </View>
     )
 }

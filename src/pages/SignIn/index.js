@@ -1,8 +1,11 @@
 import Axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { Button, Gap, Header, TextInput } from '../../components'
-import { useForm } from '../../utils'
+import { signInAction } from '../../redux/action/auth'
+import { setLoading } from '../../redux/action/global'
+import { getData, useForm } from '../../utils'
 
 
 const SignIn = ({navigation}) => {
@@ -12,15 +15,10 @@ const SignIn = ({navigation}) => {
         password: ''
     })
 
+    const dispatch = useDispatch()
+
     const onSubmit = () => {
-        console.log('Form : ', form)
-        Axios.post('http://10.0.2.2:8000/api/login', form)
-            .then(res => {
-                console.log('Success', res)
-            })
-            .catch(err => {
-                console.log('error', err)
-            })
+        dispatch(signInAction(form, navigation))
     }
 
     return(
