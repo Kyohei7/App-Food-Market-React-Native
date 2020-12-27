@@ -3,14 +3,14 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Rating } from '..'
 import { FoodDummy1} from '../../../assets'
 
-const FoodCard = () => {
+const FoodCard = ({image, name, rating}) => {
     return (
         <TouchableOpacity activeOpacity={0.7}>
             <View style={styles.container} >
-                <Image source={FoodDummy1} />
+                <Image source={image} />
                 <View style={styles.content} >
-                    <Text style={styles.text}> Mie Ayam Bakso </Text>
-                    <Rating />
+                    <Text style={styles.text}>{name}</Text>
+                    <Rating number={rating} />
                 </View>
             </View>
         </TouchableOpacity>
