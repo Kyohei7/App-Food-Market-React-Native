@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { FoodDummy3, IcBackWhite } from '../../assets'
 import { Button, Counter, Number, Rating } from '../../components'
+import { getData } from '../../utils'
 
 const FoodDetail = ({navigation, route}) => {
 
@@ -9,9 +10,46 @@ const FoodDetail = ({navigation, route}) => {
 
     const [ totalItem, setTotalItem ] = useState(1)
 
+    const [ userProfile, setUserProfile ] = useState({})
+
+    useEffect(() => {
+        getData('userProfile').then(res  => {
+            setUserProfile(res)
+        })
+    }, [])
+
     const onCounterChange = (value) => {
         console.log('Counter : ', value)
         setTotalItem(value)
+    }
+
+    const onOrder = () => {
+
+        const totalPrice = totalItem * price
+        const driver = 50000
+        const tax = 10 / 100 * totalPrice
+        const total = totalPrice + driver + tax
+        
+
+        const data = {
+            item: {
+                name,
+                price,
+                picturePath,
+            },
+            transaction: {
+                totalItem,
+                totalPrice,
+                driver,
+                tax,
+                total
+            },
+            userProfile
+        }
+        
+        console.log('Data CheckOut : ', data)
+        navigation.navigate('OrderSummary', data)
+
     }
 
 
@@ -40,10 +78,14 @@ const FoodDetail = ({navigation, route}) => {
                 <View style={styles.footer} >
                     <View style={styles.priceContainer} >
                         <Text style={styles.labelTotal} >Total Price:</Text>
-                        <Number number={totalItem * price} style={styles.priceTotal} />
+                        <Number 
+                            number={totalItem * price} 
+                            style={styles.priceTotal} />
                     </View>
                     <View style={styles.button} >
-                        <Button text="Order Now" onPress={() => navigation.replace('OrderSummary')} />
+                        <Button 
+                            text="Order Now" 
+                            onPress={onOrder} />
                     </View>
                 </View>
             </View>
