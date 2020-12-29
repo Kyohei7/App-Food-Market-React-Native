@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import { Rating } from '..';
+import { Number, Rating } from '..';
 
 // TYPE : product(Home), order-summary, inProgress, past-orders 
 
@@ -24,9 +24,9 @@ const ItemListFood = ({
             <>
               <View style={styles.content} >
                   <Text style={styles.title} > {name} </Text>
-                  <Text style={styles.price}> IDR {price} </Text>      
+                  <Number number={price} />   
               </View>
-                  <Rating rating={rating} />
+                  <Rating number={rating} />
             </>
           )
         case 'order-summary':
