@@ -5,7 +5,7 @@ import { FoodDummy1 } from '../../assets'
 import { FoodCard, Gap, HomeProfile, HomeTabSection } from '../../components'
 import { getFoodData } from '../../redux/action'
 
-const Home = () => {
+const Home = ({navigation}) => {
 
     const dispatch = useDispatch()
 
@@ -30,7 +30,8 @@ const Home = () => {
                                      key={itemFood.id} 
                                      name={itemFood.name} 
                                      image={{ uri: itemFood.picturePath }}
-                                     rating={itemFood.rate} />
+                                     rating={itemFood.rate}
+                                     onPress={() => navigation.navigate('FoodDetail', itemFood) } />
                                 )
                             })}
                         </View>
