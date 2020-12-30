@@ -6,7 +6,7 @@ import { getData } from '../../utils'
 
 const FoodDetail = ({navigation, route}) => {
 
-    const { name, picturePath, description, ingredients, rate, price } = route.params
+    const { id, name, picturePath, description, ingredients, rate, price } = route.params
 
     const [ totalItem, setTotalItem ] = useState(1)
 
@@ -33,6 +33,7 @@ const FoodDetail = ({navigation, route}) => {
 
         const data = {
             item: {
+                id,
                 name,
                 price,
                 picturePath,
