@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Button, Header, ItemListFood, ItemValue, Loading } from '../../components' 
 import { API_HOST } from '../../config'
@@ -10,18 +10,9 @@ const OrderSummary = ({navigation, route}) => {
 
     const { item, transaction, userProfile } = route.params
 
-    const [ token, setToken ] = useState('')
-
     const [ isPaymentOpen, setIsPaymentOpen ] = useState(false)
 
     const [ paymentUrl, setPaymentUrl ] = useState('https://github.com/kyohei7')
-
-    useEffect(() => {
-        getData('token').then(res => {
-            console.log('Data Token : ', res)
-            setToken(res.value)
-        })
-    }, [])
 
     const onCheckOut = () => {
         
@@ -32,18 +23,20 @@ const OrderSummary = ({navigation, route}) => {
             total: transaction.total,
             status: 'PENDING',
         }
-        Axios.post(`${API_HOST.url}/checkout`, data, {
-            headers: {
-                'Authorization': token,
-            }
-        })
-        .then(res => {
-            console.log('Checkout Success : ', res.data)
-            setIsPaymentOpen(true)
-            setPaymentUrl(res.data.data.payment_url)
-        })
-        .catch(err => {
-            console.log('Error Checkout : ', err)
+        getData('token').then(resToken => {
+            Axios.post(`${API_HOST.url}/checkout`, data, {
+                headers: {
+                    'Authorization': resToken.value
+                }
+            })
+            .then(res => {
+                console.log('Checkout Success : ', res.data)
+                setIsPaymentOpen(true)
+                setPaymentUrl(res.data.data.payment_url)
+            })
+            .catch(err => {
+                console.log('Error Checkout : ', err)
+            })
         })
     }
 
@@ -52,7 +45,7 @@ const OrderSummary = ({navigation, route}) => {
         const urlSuccess = 'http://228077c042be.ngrok.io/midtrans/success'
         const titleWeb = 'Laravel'
         if (state.title === titleWeb ) {
-            navigation.replace('SuccessOrder')
+            navigation.reset({index: 0, routes: [{name: 'SuccessOrder'}]})
         }
     }
 
