@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Dimensions, Image, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ItemListFood } from '..';
-import { FoodDummy1 } from '../../../assets';
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux';
 import { getInProgress, getPastOrders } from '../../../redux/action';
@@ -54,7 +53,7 @@ const InProgress = () => {
                   key={order.id}
                   image={{ uri: order.food.picturePath }}
                   name={order.food.name} 
-                  onPress={() => navigation.navigate('FoodDetail')}
+                  onPress={() => navigation.navigate('OrderDetail', order)}
                   type="in-progress"
                   items={order.quantity}
                   price={order.total} />
@@ -90,7 +89,7 @@ const PastOrders = () => {
             type="past-orders"
             date={order.created_at}
             status={order.status} 
-            onPress={() => navigation.navigate('OrderDetail') } />
+            onPress={() => navigation.navigate('OrderDetail', order) } />
           )
         })}
       </View>
