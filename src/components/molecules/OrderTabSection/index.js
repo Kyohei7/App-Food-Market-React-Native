@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Dimensions, ScrollView, RefreshControl } from 'react-native'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { ItemListFood } from '..';
 import { useNavigation } from '@react-navigation/native'
@@ -40,12 +40,23 @@ const InProgress = () => {
 
   const { inProgress } = useSelector( state => state.orderReducer )
 
+  const [ refreshing, setRefreshing ] = useState(false)
+
   useEffect(() => {
     dispatch(getInProgress())
   }, [])
 
+  const onRefresh = () => {
+    setRefreshing(true)
+    dispatch(getInProgress())
+    setRefreshing(false)
+  }
+
     return(
-      <ScrollView>
+      <ScrollView 
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          } >
         <View style={{ paddingTop: 8, paddingHorizontal: 24 }}>
         {inProgress.map(order => {
           return (
@@ -71,28 +82,39 @@ const PastOrders = () => {
 
   const { pastOrders } = useSelector( state => state.orderReducer )
 
+  const [ refreshing, setRefreshing ] = useState(false)
+
   useEffect(() => {
     dispatch(getPastOrders())
   }, [])
+
+  const onRefresh = () => {
+    setRefreshing(true)
+    dispatch(getInProgress())
+    setRefreshing(false)
+  }
     
-  
     return(
-      <View style={{ paddingTop: 8, paddingHorizontal: 24 }}>
-        {pastOrders.map(order => {
-          return (
-            <ItemListFood 
-            key={order.id}
-            image={{ uri: order.food.picturePath }}
-            items={order.quantity}
-            name={order.food.name}
-            price={order.total}
-            type="past-orders"
-            date={order.created_at}
-            status={order.status} 
-            onPress={() => navigation.navigate('OrderDetail', order) } />
-          )
-        })}
-      </View>
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        } >
+        <View style={{ paddingTop: 8, paddingHorizontal: 24 }}>
+          {pastOrders.map(order => {
+            return (
+              <ItemListFood 
+              key={order.id}
+              image={{ uri: order.food.picturePath }}
+              items={order.quantity}
+              name={order.food.name}
+              price={order.total}
+              type="past-orders"
+              date={order.created_at}
+              status={order.status} 
+              onPress={() => navigation.navigate('OrderDetail', order) } />
+            )
+          })}
+        </View>
+      </ScrollView>
     )
 }
 
