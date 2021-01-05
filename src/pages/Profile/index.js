@@ -6,13 +6,15 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import Axios from 'axios';
 import { API_HOST } from '../../config';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
 
     const [ userProfile, setUserProfile ] = useState({})
 
     useEffect(() => {
-        updateUserProfile()
-    }, [])
+        navigation.addListener('focus', () => {
+            updateUserProfile()
+        })
+    }, [navigation])
 
     const updateUserProfile = () => {
         getData('userProfile').then((res) => {
@@ -56,7 +58,7 @@ const Profile = () => {
                         })
                     })
                     .catch(err => {
-    
+                        showMessage('Update Photo Failed', 'danger')
                     })
                 })
             }

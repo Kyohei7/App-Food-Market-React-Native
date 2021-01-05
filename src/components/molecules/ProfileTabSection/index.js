@@ -42,7 +42,7 @@ const Account = () => {
 
     return(
       <View style={{ paddingTop: 8, paddingHorizontal: 24 }} >
-          <ItemListMenu label="Edit Profile" />
+          <ItemListMenu label="Edit Profile" onPress={() => navigation.navigate('EditProfile')} />
           <ItemListMenu label="Home Address" />
           <ItemListMenu label="Security" />
           <ItemListMenu label="Payments" />

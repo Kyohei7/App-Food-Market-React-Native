@@ -10,6 +10,7 @@ import FoodDetail from './FoodDetail'
 import OrderSummary from './OrderSummary'
 import SuccessOrder from './SuccessOrder'
 import OrderDetail from './OrderDetail'
+import EditProfile from './EditProfile'
 
 
 export {
@@ -24,5 +25,6 @@ export {
     FoodDetail,
     OrderSummary,
     SuccessOrder,
-    OrderDetail
+    OrderDetail,
+    EditProfile
 }
