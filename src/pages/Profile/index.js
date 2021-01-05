@@ -1,41 +1,89 @@
 import React, { useEffect, useState } from 'react'
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { ProfileTabSection, Gap } from '../../components'
-import { getData } from '../../utils'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ProfileTabSection } from '../../components'
+import { getData, showMessage, storeData } from '../../utils'
+import { launchImageLibrary } from 'react-native-image-picker';
+import Axios from 'axios';
+import { API_HOST } from '../../config';
 
 const Profile = () => {
 
     const [ userProfile, setUserProfile ] = useState({})
 
     useEffect(() => {
-        getData('userProfile').then(res => {
-            console.log('Data Profile : ', res);
+        updateUserProfile()
+    }, [])
+
+    const updateUserProfile = () => {
+        getData('userProfile').then((res) => {
             setUserProfile(res)
         })
-    }, [])
+    }
+
+    const updatePhoto = () => {
+        launchImageLibrary({
+            quality: 0.5,
+            maxWidth: 200,
+            maxHeight: 200
+        
+        }, (response) => {
+            if( response.didCancel || response.errorMessage ) {
+                showMessage('Anda Tidak Memilih Photo')
+            } else {
+                const source = {uri: response.uri}
+                const dataImage = {
+                    uri: response.uri,
+                    type: response.type,
+                    name: response.fileName
+                }
+
+                const photoForUpload = new FormData()
+                photoForUpload.append('file', dataImage)
+                getData('token').then(resToken => {
+                    Axios.post(`${API_HOST.url}/user/photo`, photoForUpload, {
+                        headers: {
+                            'Authorization': resToken.value,
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(res => {
+                        getData('userProfile').then(resUser => {
+                            showMessage('Update Photo Success', 'success')
+                            resUser.profile_photo_url = `http://10.0.2.2:8000/storage/${res.data.data[0]}`
+                            storeData('userProfile', resUser).then(() => {
+                            updateUserProfile()
+                            })
+                        })
+                    })
+                    .catch(err => {
+    
+                    })
+                })
+            }
+        })
+    }
 
 
     return (
-        <ScrollView>
             <View style={styles.page} >
                 <View style={styles.profileDetail} >
                     <View style={styles.photo}>
+                    <TouchableOpacity onPress={updatePhoto} >
                         <View style={styles.borderPhoto} >
                             <Image 
                                 source={{ uri: userProfile.profile_photo_url }}
                                 style={styles.photoContainer} 
                                  />
                         </View>
-                    </View>
-                </View> 
-            <Text style={styles.name} >{userProfile.name}</Text>
-            <Text style={styles.email}>{userProfile.email}</Text>
-            <Gap height={26} />
-                <View style={styles.profileTab} >
+                    </TouchableOpacity>   
+                    </View> 
+                <Text style={styles.name} >{userProfile.name}</Text>
+                <Text style={styles.email}>{userProfile.email}</Text>
+            </View>
+            <View style={styles.profileTab} >
                     <ProfileTabSection />
                 </View>
             </View>
-        </ScrollView>
     )
 }
 
