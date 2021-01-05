@@ -1,21 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { ProfileDummy } from '../../assets'
 import { ProfileTabSection, Gap } from '../../components'
+import { getData } from '../../utils'
 
 const Profile = () => {
+
+    const [ userProfile, setUserProfile ] = useState({})
+
+    useEffect(() => {
+        getData('userProfile').then(res => {
+            console.log('Data Profile : ', res);
+            setUserProfile(res)
+        })
+    }, [])
+
+
     return (
         <ScrollView>
             <View style={styles.page} >
                 <View style={styles.profileDetail} >
                     <View style={styles.photo}>
                         <View style={styles.borderPhoto} >
-                            <Image style={styles.photoContainer} source={ProfileDummy} />
+                            <Image 
+                                source={{ uri: userProfile.profile_photo_url }}
+                                style={styles.photoContainer} 
+                                 />
                         </View>
                     </View>
                 </View> 
-            <Text style={styles.name} >Muhammad Rizki</Text>
-            <Text style={styles.email}>rizkimuhammad2301@gmail.com</Text>
+            <Text style={styles.name} >{userProfile.name}</Text>
+            <Text style={styles.email}>{userProfile.email}</Text>
             <Gap height={26} />
                 <View style={styles.profileTab} >
                     <ProfileTabSection />

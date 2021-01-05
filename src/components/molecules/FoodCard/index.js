@@ -1,7 +1,6 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Rating } from '..'
-import { FoodDummy1} from '../../../assets'
 
 const FoodCard = ({image, name, rating, onPress}) => {
     return (
@@ -41,4 +40,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Regular',
         color: '#020202'
     },
+    image: {
+        width: 200,
+        height: 140,
+        resizeMode: 'cover',
+    }
 })
